@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>経路検索 Shizusouth</title>
+    <meta content="静岡理工科大生の時刻表サイト" name="description">
+    <link rel="shortcut icon" href="https://shizusouth.com/img/logo.jpg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://shizusouth.com/CSS/styles.css">
+    <link rel="manifest" href="https://shizusouth.com/manifest.json">
+    <link rel="apple-touch-icon" href="https://shizusouth.com/img/logo.jpg" sizes="192x192">
+    <meta name="google-site-verification" content="cTLHw98HjFh764reNhYdfaeKFPQkps16a_G5GJjSJ70" />
+    <meta name="theme-color" content="#660033">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Shizusouth">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
+     
+    <script>
+  	navigator.serviceWorker.register('https://shizusouth.com/service-worker.js').then(function(registration){
+		console.log("Service Worker is registered!!");
+	  });
+    </script>
+    
+  </head>
+  <body id="body" style="padding-bottom:200px;padding-top:100px;">
+    <div class="hamburger-menu" id="menu">
+      <ul>
+        <li><a href="#" onclick="close_menu()">閉じる</a></li>
+        <li><a href="https://shizusouth.com/index.html"><span class="material-icons"style="font-size:20px;">home</span>トップ</a></li>
+        <li><a href="https://shizusouth.com/STATION/index.html"><span class="material-icons"style="font-size:20px;">directions_transit_filled</span>電車</a></li>
+        <li><a href="https://shizusouth.com/BUS/index.html"><span class="material-icons"style="font-size:20px;">directions_bus_filled</span>バス</a></li>
+        <li><a href="https://shizusouth.com//MAP/index.html"><span class="material-icons"style="font-size:20px;">explore</span>経路検索</a></li>
+        <li><a href="https://www.sist.ac.jp/assets/schoolbus.pdf"target="_blank">
+          <span class="material-icons"style="font-size:20px;">picture_as_pdf</span>バス</a></li>
+        <li><a href="https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202203/tokaido_Aino_B_wh_u.pdf"target="_blank">
+          <span class="material-icons"style="font-size:20px;">picture_as_pdf</span>静岡方面</a></li>
+        <li><a href="https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202203/tokaido_Aino_B_wh_d.pdf"target="_blank">
+          <span class="material-icons"style="font-size:20px;">picture_as_pdf</span>浜松方面</a></li>
+      </ul>
+    </div>
+    <header>
+      <ul class="header-list">
+        <li><a href="https://shizusouth.com/STATION/index.html"><span class="material-icons"style="font-size:40px;">directions_transit_filled</span><p style="font-size:20px;font-weight:bold;">電車</p></a></li>
+        <li><a href="https://shizusouth.com/BUS/index.html"><span class="material-icons"style="font-size:40px;">directions_bus_filled</span><p style="font-size:20px;font-weight:bold;">バス</p></a></li>
+      </ul>
+    </header>
+    
+      <p class="theme"style="color:#660033;font-size:50px;font-weight:900;padding-bottom:10px;">経路検索</p>
+      <form action="#"method="get" id="form-keiro"style="text-align:center;">
+        <style>
+          select{
+            padding:7px;
+          }
+          input{
+            margin-top:20px;
+            padding:5px;
+          }
+        </style>
+        <p style="font-size:30px;color:#550022;">行先</p>
+        <select name="tostation" id="to-station">
+          <option value="浜松駅">浜松</option>
+          <option value="天竜川駅">天竜川</option>
+          <option value="豊田町駅">豊田町</option>
+          <option value="磐田駅">磐田</option>
+          <option value="御厨駅">御厨</option>
+          <option value="袋井駅">袋井</option>
+          <option value="愛野駅"selected>愛野</option>
+          <option value="掛川駅">掛川</option>
+          <option value="菊川駅">菊川</option>
+          <option value="金谷駅">金谷</option>
+          <option value="島田駅">島田</option>
+          <option value="六合駅">六合</option>
+          <option value="藤枝駅">藤枝</option>
+          <option value="西焼津駅">西焼津</option>
+          <option value="焼津駅">焼津</option>
+          <option value="用宗駅">用宗</option>
+          <option value="安倍川駅">安倍川</option>
+          <option value="静岡駅">静岡</option>
+        </select><br>
+        <div id="view_option"style="display:none;margin-top:10px;">
+          <p style="font-size:30px;color:#550022;">移動手段</p>
+          <select name="option" id="option">
+            <option value="driving">車</option>
+            <option value="transit"selected>電車</option>
+            <option value="walking">徒歩</option>
+          </select>
+        </div>
+        <button type="button"id="submit2"style="margin-top:20px;padding:2px 5px;"list="to-station">検索</button>
+        <button type="button"onclick="view_Map_Option()" id="button" class="button"style="display:none;">+</button>
+      </form>
+      <script>
+        var form = document.getElementById("form-keiro");
+        var input1 = form.tostation
+        var option = document.getElementById('option');
+        var url ="https://www.google.com/maps/dir/?api=1&destination=愛野駅&travelmode=transit";
+        form.addEventListener("change", function() {
+          console.log(option.value)
+          url = decodeURI("https://www.google.com/maps/dir/?api=1&destination=" + input1.value + "&travelmode=transit");
+          url = url.replace(/travelmode=.*/g, "travelmode="+option.value)
+          console.log(decodeURIComponent(url))
+        });
+        document.getElementById("submit2").addEventListener('click',()=>{
+          console.log(url)
+          window.open(url, '_blank');
+        });
+      </script>
+    <footer>
+      <h1><a href="https://shizusouth.com/"style="color:#ffffff;">Shizusouth</a></h1>
+      <span class="material-icons" class="menu-button"onclick="view_menu()"style="background-color:white;color:#660033;padding:12px;position:fixed;top:0px;right:0px;">reorder</span>
+    </footer>
+
+    <script src="./map.js"></script>
+  </body>
+</html>

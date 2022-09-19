@@ -1,0 +1,14 @@
+{
+    "name"              : "Shizusouth",
+    "short_name"        : "Shizusouth",
+    "description"       : "SIST時刻表サイト",
+    "start_url"         : "https://shizusouth.com/index.html",
+    "display"           : "standalone",
+    "background_color"  : "#660033",
+    "theme_color"       : "#660033",
+    "icons": [{
+        "src"           : "img/192enlogo.png",
+        "sizes"         : "192x192",
+        "type"          : "image/png"
+      }]
+  }
